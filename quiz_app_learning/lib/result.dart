@@ -2,13 +2,23 @@ import 'package:flutter/material.dart';
 
 class Result extends StatelessWidget {
   final Map results;
-  Result(this.results);
+  final Function reset;
+  Result(this.results, this.reset);
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Center(
-      child: Container(
-        child: result(results),
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: result(results),
+          ),
+          RaisedButton(
+            onPressed: reset,
+            child: Text('reset'),
+            color: Colors.red,
+          )
+        ],
       ),
     ));
   }

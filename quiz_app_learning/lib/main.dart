@@ -33,6 +33,13 @@ class _MyAppState extends State<MyApp> {
     },
   ];
 
+  Function reset() {
+    setState(() {
+      questionIndex = 0;
+      choosenResult = {'fovourite': null, 'dart': null, 'javascript': null};
+    });
+  }
+
   Function addQuestion(int index, int answerIndex) {
     setState(() {
       questionIndex++;
@@ -59,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       ),
       body: questionIndex < listquestion.length
           ? Quiz(addQuestion, listquestion, questionIndex)
-          : Result(choosenResult),
+          : Result(choosenResult, reset),
     ));
   }
 }
