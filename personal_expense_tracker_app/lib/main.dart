@@ -11,14 +11,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Home(),
       theme: ThemeData(
-        primarySwatch: Colors.green,
-        fontFamily: 'Nunito',
-        appBarTheme: AppBarTheme(
-          textTheme: ThemeData.light().textTheme.copyWith(
+          primarySwatch: Colors.green,
+          fontFamily: 'Nunito',
+          appBarTheme: AppBarTheme(
+            textTheme: ThemeData.light().textTheme.copyWith(
                 title: TextStyle(fontFamily: 'Nunito', fontSize: 25),
-              ),
-        ),
-      ),
+                button: TextStyle(color: Colors.white)),
+          ),
+          textTheme: TextTheme(button: TextStyle(color: Colors.white))),
       title: "Personal Expense trucker",
     );
   }

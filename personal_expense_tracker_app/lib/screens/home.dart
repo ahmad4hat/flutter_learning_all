@@ -22,13 +22,13 @@ class _HomeState extends State<Home> {
         return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
       }).toList();
 
-  void addTransaction(String title, double amount) {
+  void addTransaction(String title, double amount, DateTime date) {
     setState(() {
       transactions.add(Transaction(
           id: DateTime.now().toString(),
           title: title,
           amount: amount,
-          date: DateTime.now()));
+          date: date));
     });
   }
 
@@ -38,6 +38,12 @@ class _HomeState extends State<Home> {
         builder: (bctx) {
           return GestureDetector(child: NewTransaction(addTransaction));
         });
+  }
+
+  void deleteTransaction(String id) {
+    setState(() {
+      transactions.removeWhere((transaction) => transaction.id == id);
+    });
   }
 
   @override
@@ -56,7 +62,7 @@ class _HomeState extends State<Home> {
         child: Column(
           children: <Widget>[
             Card(child: Chart(recentTransaction)),
-            TransactionList(transactions)
+            TransactionList(transactions, deleteTransaction)
           ],
         ),
       ),

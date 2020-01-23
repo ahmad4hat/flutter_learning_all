@@ -21,14 +21,11 @@ class Chart extends StatelessWidget {
           }
         });
 
-        print(totalSum);
-        print(weekDay);
-
         return {
           'day': DateFormat.E().format(weekDay).substring(0, 1),
           'amount': totalSum
         };
-      });
+      }).reversed.toList();
   double get totalSpending =>
       groupedTranactionValues.fold(0.0, (sum, item) => sum + item['amount']);
 
