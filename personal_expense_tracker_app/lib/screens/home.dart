@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
+// widgets
 import './../models/transaction.dart';
 import './../widgets/transaction_list.dart';
 import './../widgets/new_transaction.dart';
+import './../widgets/chart.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,13 +12,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-
   final List<Transaction> transactions = [
-    Transaction(id: 't1', title: 'food', amount: 69.9, date: DateTime.now()),
-    Transaction(id: 't2', title: 'soda', amount: 64.9, date: DateTime.now()),
-    Transaction(id: 't3', title: 'lpen', amount: 89.9, date: DateTime.now()),
+    // Transaction(id: 't1', title: 'food', amount: 69.9, date: DateTime.now()),
+    // Transaction(id: 't2', title: 'soda', amount: 64.9, date: DateTime.now()),
+    // Transaction(id: 't3', title: 'lpen', amount: 89.9, date: DateTime.now()),
   ];
+
+  List<Transaction> get recentTransaction => transactions.where((tx) {
+        return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+      }).toList();
 
   void addTransaction(String title, double amount) {
     setState(() {
@@ -50,15 +55,7 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text(
-                  'text',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
+            Card(child: Chart(recentTransaction)),
             TransactionList(transactions)
           ],
         ),
