@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         canvasColor: Color.fromRGBO(255, 244, 223, 1),
         fontFamily: 'OpenSans',
+
+        bottomAppBarTheme: BottomAppBarTheme(color: Colors.red),
+
         textTheme: ThemeData.light().textTheme.copyWith(
               body1: TextStyle(
                 color: Color.fromRGBO(20, 51, 1, 1),

@@ -8,29 +8,45 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  List<Map<String, Object>> _pages = [
+    {"page": CategoriesScreen(), "title": "Categories"},
+    {"page": FavouriteScreen(), "title": "Favorite"}
+  ];
+
+  int _selectedIndex = 0;
+
+  void _setSelectedIndex(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('whatever'),
-          bottom: TabBar(
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.category),
-                text: 'Category',
-              ),
-              Tab(
-                icon: Icon(Icons.star),
-                text: 'fovourite',
-              ),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: <Widget>[CategoriesScreen(), FavouriteScreen()],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_pages[_selectedIndex]["title"]),
+      ),
+      body: _pages[_selectedIndex]["page"],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        backgroundColor: Theme.of(context).primaryColor,
+        onTap: _setSelectedIndex,
+        currentIndex: _selectedIndex,
+        selectedItemColor: Theme.of(context).accentColor,
+        unselectedItemColor: Colors.white,
+        // fixedColor: Colors.red,
+        items: [
+          BottomNavigationBarItem(
+              backgroundColor: Theme.of(context)
+                  .primaryColor, // you have to add seperate background color for each item for BottomNavigationBarType.shifting,
+              icon: Icon(Icons.category),
+              title: Text("Category")),
+          BottomNavigationBarItem(
+              backgroundColor: Theme.of(context).primaryColor,
+              icon: Icon(Icons.star),
+              title: Text("Favourite")),
+        ],
       ),
     );
   }
