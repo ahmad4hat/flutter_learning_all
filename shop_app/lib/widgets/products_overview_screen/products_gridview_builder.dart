@@ -5,16 +5,19 @@ import './../../providers/product_provider.dart';
 import './product_item.dart';
 
 class ProductsGridviewBuilder extends StatelessWidget {
+  final isShowFavourite;
+  ProductsGridviewBuilder(this.isShowFavourite);
   @override
   Widget build(BuildContext context) {
-    final productsProvider =
-        Provider.of<ProductsProvider>(context) as ProductsProvider;
-    final list = productsProvider.items;
+    final list = isShowFavourite
+        ? Provider.of<ProductsProvider>(context).favoutires
+        : Provider.of<ProductsProvider>(context).items;
+
     return GridView.builder(
       padding: EdgeInsets.all(10),
       itemCount: list.length,
-      itemBuilder: (ctx, index) => ChangeNotifierProvider(
-          create: (context) => list[index], child: ProductItem()),
+      itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+          value: list[index], child: ProductItem()),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3 / 2,
