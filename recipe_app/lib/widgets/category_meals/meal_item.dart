@@ -9,7 +9,7 @@ class MealItem extends StatelessWidget {
   final int duration;
   final complexity;
   final affordability;
-
+  Function removeItem;
   String get complexityText {
     switch (complexity.toString()) {
       case "Complexity.Simple":
@@ -42,15 +42,21 @@ class MealItem extends StatelessWidget {
       @required this.id,
       @required this.duration,
       @required this.complexity,
-      @required this.affordability});
+      @required this.affordability,
+      this.removeItem});
 
   void selectedItem(BuildContext context) {
-    Navigator.of(context).pushNamed(MealDetails.routeName, arguments: id);
+    Navigator.of(context)
+        .pushNamed(MealDetails.routeName, arguments: id)
+        .then((res) {
+      if (res != null) {
+        removeItem(res);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(complexityText);
     return InkWell(
       onTap: () => selectedItem(context),
       child: Card(

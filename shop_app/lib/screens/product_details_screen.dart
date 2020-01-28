@@ -12,6 +12,39 @@ class ProductDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(product.title),
       ),
+      body: SingleChildScrollView(
+        child: Card(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Column(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                height: 300,
+                width: double.infinity,
+                child: Image.network(
+                  product.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                product.description,
+                softWrap: true,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text('\$ ${product.price}')
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './../extra/dummy_data.dart';
+import 'dart:async';
 
 class MealDetails extends StatelessWidget {
   static const routeName = "/meal-details";
@@ -29,8 +30,12 @@ class MealDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context).settings.arguments;
-    final selectedMeal = DUMMY_MEALS.firstWhere((meal) => meal.id == id);
+    final mealId = ModalRoute.of(context).settings.arguments;
+    final selectedMeal = DUMMY_MEALS.firstWhere((meal) => meal.id == mealId);
+    void poped() {
+      Navigator.pop(context, mealId);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('${selectedMeal.title}'),
@@ -89,6 +94,13 @@ class MealDetails extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete_outline),
+        onPressed: () async {
+          await print(mealId.runtimeType);
+          poped();
+        },
       ),
     );
   }
