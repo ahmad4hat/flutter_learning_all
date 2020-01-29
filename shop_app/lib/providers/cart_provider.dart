@@ -12,6 +12,10 @@ class CartItem {
     @required this.quantity,
     @required this.title,
   });
+
+  Map<String, dynamic> toMap() {
+    return {"id": id, "title": title, "quantity": quantity, "price": price};
+  }
 }
 
 class Cart with ChangeNotifier {
@@ -52,6 +56,25 @@ class Cart with ChangeNotifier {
 
   void removeItem(productId) {
     _items.remove(productId);
+    notifyListeners();
+  }
+
+  void removeSingleItem(prodId) {
+    if (!items.containsKey(prodId)) {
+      return;
+    }
+    if (_items[prodId].quantity > 1) {
+      _items.update(
+        prodId,
+        (existingCartItem) => CartItem(
+            id: existingCartItem.id,
+            title: existingCartItem.title,
+            price: existingCartItem.price,
+            quantity: existingCartItem.quantity - 1),
+      );
+    } else {
+      _items.remove(prodId);
+    }
     notifyListeners();
   }
 

@@ -4,7 +4,7 @@ import '../widgets/common/UI/badge.dart';
 //widget
 import './../widgets/products_overview_screen/product_item.dart';
 import './../widgets/products_overview_screen/products_gridview_builder.dart';
-
+import './drawer/main_drawer.dart';
 //provider
 import '../providers/products_provider.dart';
 import '../providers/cart_provider.dart';
@@ -72,6 +72,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           )
         ],
       ),
+      drawer: MainDrawer(),
       body: ProductsGridviewBuilder(isShowFavourite),
     );
   }

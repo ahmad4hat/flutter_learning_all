@@ -24,6 +24,26 @@ class CartItem extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Icon(Icons.delete),
       ),
+      confirmDismiss: (direction) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text("Are you sure you want to remove ?"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("NO"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            FlatButton(
+              child: Text("Yes"),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        ),
+      ),
       direction: DismissDirection.endToStart,
       child: Card(
         margin: EdgeInsets.all(10),

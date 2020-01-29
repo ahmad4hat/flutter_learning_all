@@ -9,6 +9,14 @@ class Product with ChangeNotifier {
   final String imageUrl;
   bool isFavourite = false;
 
+  Map<String, Object> get toMap => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "price": price,
+        "imageUrl": imageUrl
+      };
+
   Product(
       {@required this.id,
       @required this.title,
