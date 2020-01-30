@@ -19,14 +19,18 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
+  String authToken;
   List<OrderItem> _orders = [];
+
+  Orders(this.authToken, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
   }
 
   void fetchInitOrders() async {
-    const url = "https://android-flutter-databse.firebaseio.com/orders.json";
+    final url =
+        'https://android-flutter-databse.firebaseio.com/orders.json?auth=$authToken';
     final res = await get(url);
     final List<OrderItem> loadedOrder = [];
     print("fetching orders");
@@ -46,7 +50,8 @@ class Orders with ChangeNotifier {
   }
 
   void addOrder(List<CartItem> cartProducts, double total) async {
-    const url = "https://android-flutter-databse.firebaseio.com/orders.json";
+    final url =
+        'https://android-flutter-databse.firebaseio.com/orders.json?auth=$authToken';
     final timeStamp = DateTime.now();
 
     final res = await post(

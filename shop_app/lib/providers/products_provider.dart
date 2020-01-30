@@ -5,7 +5,10 @@ import 'dart:async';
 import 'dart:convert';
 
 class ProductsProvider with ChangeNotifier {
+  String authToken;
   List<Product> _items = [];
+
+  ProductsProvider(this.authToken, this._items);
 
   List<Product> get favoutires =>
       _items.where((prod) => prod.isFavourite == true).toList();
@@ -15,7 +18,8 @@ class ProductsProvider with ChangeNotifier {
   Product findById(String id) => _items.firstWhere((prod) => prod.id == id);
 
   Future<void> getInitProducts() async {
-    const url = "https://android-flutter-databse.firebaseio.com/products.json";
+    final url =
+        'https://android-flutter-databse.firebaseio.com/products.json?auth=$authToken';
     print("fetchig Products");
     try {
       final res = await get(url);
@@ -42,7 +46,8 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> addProduct(product) async {
-    const url = "https://android-flutter-databse.firebaseio.com/products.json";
+    final url =
+        'https://android-flutter-databse.firebaseio.com/products.json?auth=$authToken';
 
     try {
       final res = await post(url, body: json.encode(product.toMap));
@@ -64,7 +69,7 @@ class ProductsProvider with ChangeNotifier {
 
   void updateProduct(productId, newProduct) async {
     final url =
-        'https://android-flutter-databse.firebaseio.com/products/$productId.json';
+        'https://android-flutter-databse.firebaseio.com/products/$productId.json?auth=$authToken';
 
     await patch(url, body: json.encode(newProduct.toMap));
 
@@ -76,7 +81,7 @@ class ProductsProvider with ChangeNotifier {
 
   void removeProduct(String id) async {
     final url =
-        'https://android-flutter-databse.firebaseio.com/products/$id.json';
+        'https://android-flutter-databse.firebaseio.com/products/$id.json?auth=$authToken';
     try {
       final res = await delete(url);
       if (res.statusCode >= 400) {

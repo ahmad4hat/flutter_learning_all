@@ -27,13 +27,13 @@ class Product with ChangeNotifier {
       @required this.imageUrl,
       this.isFavourite = false});
 
-  void changeFavourite() async {
+  void changeFavourite(String authToken) async {
     final oldStatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
 
     final url =
-        'https://android-flutter-databse.firebaseio.com/products/$id.json';
+        'https://android-flutter-databse.firebaseio.com/products/$id.json?auth=$authToken';
 
     try {
       final res =
