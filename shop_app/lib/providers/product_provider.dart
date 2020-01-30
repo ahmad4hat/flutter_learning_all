@@ -10,11 +10,11 @@ class Product with ChangeNotifier {
   bool isFavourite = false;
 
   Map<String, Object> get toMap => {
-        "id": id,
         "title": title,
         "description": description,
         "price": price,
-        "imageUrl": imageUrl
+        "imageUrl": imageUrl,
+        "isFavourite": isFavourite
       };
 
   Product(

@@ -21,7 +21,26 @@ class ProductOverviewScreen extends StatefulWidget {
 }
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
-  var isShowFavourite = false;
+  var _isShowFavourite = false;
+  var _isLoading = false;
+  var _isFirstTime = true;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    if (_isFirstTime) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<ProductsProvider>(context).getInitProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isFirstTime = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +56,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
             onSelected: (Filter filter) {
               if (filter == Filter.Favourite) {
                 setState(() {
-                  isShowFavourite = true;
+                  _isShowFavourite = true;
                 });
               } else if (filter == Filter.ShowAll) {
                 setState(() {
-                  isShowFavourite = false;
+                  _isShowFavourite = false;
                 });
               }
             },
@@ -73,7 +92,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         ],
       ),
       drawer: MainDrawer(),
-      body: ProductsGridviewBuilder(isShowFavourite),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductsGridviewBuilder(_isShowFavourite),
     );
   }
 }
