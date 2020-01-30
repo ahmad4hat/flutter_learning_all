@@ -13,9 +13,15 @@ class CartItem {
     @required this.title,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> get toMap {
     return {"id": id, "title": title, "quantity": quantity, "price": price};
   }
+
+  CartItem.fromMap(Map<String, dynamic> map)
+      : this.id = map["id"],
+        this.title = map["title"],
+        this.quantity = map["quantity"],
+        this.price = map["price"];
 }
 
 class Cart with ChangeNotifier {

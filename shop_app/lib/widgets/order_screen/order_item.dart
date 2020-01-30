@@ -41,6 +41,10 @@ class _OrderItemState extends State<OrderItem> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text('\$ ${prod.price}'),
+                              Text(prod.title),
+                              SizedBox(
+                                width: 30,
+                              ),
                               Text('${prod.quantity} X')
                             ],
                           ))

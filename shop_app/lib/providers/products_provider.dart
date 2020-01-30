@@ -19,7 +19,9 @@ class ProductsProvider with ChangeNotifier {
     print("fetchig Products");
     try {
       final res = await get(url);
-      Map<String, dynamic> produtcsData = json.decode(res.body);
+
+      final produtcsData = json.decode(res.body) as Map<String, dynamic>;
+      if (produtcsData == null) return;
       List<Product> prodItems = [];
       produtcsData.forEach((key, value) {
         prodItems.add(Product(
