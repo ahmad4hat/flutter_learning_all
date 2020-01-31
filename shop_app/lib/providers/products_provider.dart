@@ -43,8 +43,11 @@ class ProductsProvider with ChangeNotifier {
         prodItems.add(Product(
           id: key,
           description: value["description"],
-          isFavourite:
-              favData == null ? false : favData['$key']["isFavourite"] ?? false,
+          isFavourite: favData == null
+              ? false
+              : favData['$key'] == null
+                  ? false
+                  : favData['$key']["isFavourite"] ?? false,
           price: value["price"],
           title: value["title"],
           imageUrl: value["imageUrl"],
