@@ -16,8 +16,8 @@ class ProductItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       child: InkWell(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(ProductDetailScreen.routeName, arguments: product.id);
+          Navigator.of(context).pushNamed(ProductDetailScreen.routeName,
+              arguments: {"id": product.id, "url": product.imageUrl});
         },
         child: GridTile(
           child: Image.network(

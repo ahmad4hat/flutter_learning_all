@@ -6,7 +6,10 @@ class ProductDetailScreen extends StatelessWidget {
   static const String routeName = "/product-details";
   @override
   Widget build(BuildContext context) {
-    String id = ModalRoute.of(context).settings.arguments as String;
+    Map map = ModalRoute.of(context).settings.arguments;
+    String id = map["id"];
+    String url = map["url"];
+
     final product = Provider.of<ProductsProvider>(context).findById(id);
     return Scaffold(
       appBar: AppBar(
@@ -25,7 +28,7 @@ class ProductDetailScreen extends StatelessWidget {
                 height: 300,
                 width: double.infinity,
                 child: Image.network(
-                  product.imageUrl,
+                  url,
                   fit: BoxFit.cover,
                 ),
               ),

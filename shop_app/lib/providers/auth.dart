@@ -76,6 +76,7 @@ class Auth with ChangeNotifier {
     print("auto loging middle");
 
     final extractedUserData = json.decode(pref.getString('userData'));
+    print(extractedUserData);
     final expiryDate = DateTime.parse(extractedUserData["expiryDate"]);
 
     if (expiryDate.isBefore(DateTime.now())) {
@@ -129,10 +130,13 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> logout() {
+  Future<void> logout() async {
+    pref = await SharedPreferences.getInstance();
     _token = null;
     _userId = null;
     _expiryDate = null;
+    await pref.clear();
+
     if (_authTimer != null) {
       _authTimer.cancel();
       _authTimer = null;
