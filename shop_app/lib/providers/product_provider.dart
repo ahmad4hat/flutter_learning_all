@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' show required;
-import 'package:http/http.dart' show patch;
+import 'package:http/http.dart' show put;
 import 'dart:convert';
 
 class Product with ChangeNotifier {
@@ -27,17 +27,17 @@ class Product with ChangeNotifier {
       @required this.imageUrl,
       this.isFavourite = false});
 
-  void changeFavourite(String authToken) async {
+  void changeFavourite(String authToken, String userId) async {
     final oldStatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
 
     final url =
-        'https://android-flutter-databse.firebaseio.com/products/$id.json?auth=$authToken';
+        'https://android-flutter-databse.firebaseio.com/userFavourite/$userId/$id.json?auth=$authToken';
 
     try {
       final res =
-          await patch(url, body: json.encode({"isFavourite": isFavourite}));
+          await put(url, body: json.encode({"isFavourite": isFavourite}));
       if (res.statusCode >= 400) {
         throw Exception("something went wrong while updating the favourite");
       }

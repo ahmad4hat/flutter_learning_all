@@ -13,12 +13,13 @@ class UserProductScreen extends StatelessWidget {
 
   Future<void> _refreshProd(BuildContext context) async {
     await Provider.of<ProductsProvider>(context, listen: false)
-        .getInitProducts();
+        .getInitProducts(true);
+    return Future.value();
   }
 
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<ProductsProvider>(context);
+    // final products = Provider.of<ProductsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("User Prodoucts"),
@@ -32,18 +33,30 @@ class UserProductScreen extends StatelessWidget {
         ],
       ),
       drawer: MainDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () => _refreshProd(context),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: ListView.builder(
-            itemCount: products.items.length,
-            itemBuilder: (_, index) => Card(
-              child: UserProductItem(products.items[index].id,
-                  products.items[index].title, products.items[index].imageUrl),
-            ),
-          ),
-        ),
+      body: FutureBuilder(
+        future: _refreshProd(context),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () => _refreshProd(context),
+                    child: Consumer<ProductsProvider>(
+                      builder: (ctx, products, _) => Padding(
+                        padding: EdgeInsets.all(8),
+                        child: ListView.builder(
+                          itemCount: products.items.length,
+                          itemBuilder: (_, index) => Card(
+                            child: UserProductItem(
+                                products.items[index].id,
+                                products.items[index].title,
+                                products.items[index].imageUrl),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
       ),
     );
   }
